@@ -6,4 +6,5 @@ echo. > out\.nojekyll
 git add -f out\
 git commit -m "deploy to gh-pages"
 git subtree push --prefix out origin gh-pages
+git push
 echo "deploy to gh-pages done"
