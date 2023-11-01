@@ -4,6 +4,7 @@ const nextConfig = {
     output: 'export',
     trailingSlash: '/',
     env: {},
+    assetPrefix: process.env.NODE_ENV === 'production' ? '/nextjs-gh-pages/' : '',
 }
 
 module.exports = nextConfig
