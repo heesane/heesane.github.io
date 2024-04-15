@@ -53,6 +53,9 @@ notification:
 
 post:
   written_by: By
+  language: 언어
+  platform: 플랫폼
+  level: 레벨
   posted: 게시
   updated: 업데이트
   words: 단어
