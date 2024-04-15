@@ -3,3 +3,19 @@ languages:
     name: Java
     color: '#007396'
     url: https://www.java.com/
+  python:
+    name: Python
+    color: '#3776AB'
+    url: https://www.python.org/
+  javascript:
+    name: JavaScript
+    color: '#F7DF1E'
+    url: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+  typescript:
+    name: TypeScript
+    color: '#3178C6'
+    url: https://www.typescriptlang.org/
+  go:
+    name: Go
+    color: '#00ADD8'
+    url: https://golang.org/
