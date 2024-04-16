@@ -1,0 +1,32 @@
+name: Process and Save MD File
+on: pull_request
+# on: push
+jobs:
+  process-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Get list of new files
+        id: newfiles
+        run: |
+          files=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.event.after }})
+          echo "::set-output name=list::$(echo $files)"
+
+      - name: Upload Files to API and Download MD
+        run: |
+          for file in ${{ steps.newfiles.outputs.list }}
+          do
+            curl -F "file=@${file}" https://api.example.com/upload -o response.md
+          done
+
+      - name: Save MD File
+        run: |
+          mkdir -p path/to/your/folder  # Create the directory if it doesn't exist
+          mv response.md path/to/your/folder/response.md
+          git config --local user.email "tees3359@gmail.com"
+          git config --local user.name "heesane"
+          git add path/to/your/folder/response.md
+          git commit -m "POSTING"
+          git push
