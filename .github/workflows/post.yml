@@ -1,32 +1,35 @@
-name: Process and Save MD File
-on: pull_request
-# on: push
+name: Download and Commit MD File
+on: push #pull_request
 jobs:
-  process-files:
+  download-and-commit-md:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Get list of new files
         id: newfiles
         run: |
           files=$(git diff --diff-filter=A --name-only ${{ github.event.before }} ${{ github.event.after }})
           echo "::set-output name=list::$(echo $files)"
 
-      - name: Upload Files to API and Download MD
+      - name: Commit and Push MD File
         run: |
-          for file in ${{ steps.newfiles.outputs.list }}
-          do
-            curl -F "file=@${file}" https://api.example.com/upload -o response.md
-          done
-
-      - name: Save MD File
+          # _posts 폴더에 새로운 파일이 있는지 확인
+          MD_FILE=$(ls _posts | grep "$TODAY-test.md")
+          if [ -n "$MD_FILE" ]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add "_posts/$MD_FILE"
+            git commit -m "Add new MD file from API response"
+            git push
+          else
+            echo "No new .md file to commit"
+          fi
+      
+      - name: Upload Files and Download MD
         run: |
-          mkdir -p path/to/your/folder  # Create the directory if it doesn't exist
-          mv response.md path/to/your/folder/response.md
-          git config --local user.email "tees3359@gmail.com"
-          git config --local user.name "heesane"
-          git add path/to/your/folder/response.md
-          git commit -m "POSTING"
-          git push
+          # 현재 날짜를 YYYY-MM-DD 형식으로 저장
+          TODAY=$(date +'%Y-%m-%d')
+          # API로부터 파일을 받아오고, 해당 파일명으로 _posts 폴더에 저장
+          curl -X POST -H "Content-Type: multipart/form-data" -F "file=@yourfile" https://api.example.com/upload -o "_posts/$TODAY-test.md"
