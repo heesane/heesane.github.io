@@ -8,7 +8,6 @@ tail_includes:
   - post-nav
   - comments
 ---
-
 {% include lang.html %}
 
 <article class="px-1">
@@ -71,7 +70,6 @@ tail_includes:
             {% assign language = page.language %}
           {% endif %}
 
-
           {{ site.data.locales[lang].post.written_by }}
 
           <em>
@@ -86,31 +84,33 @@ tail_includes:
               {% endfor %}
             {% else %}
               <a href="{{ site.social.links[0] }}">{{ site.social.name }}</a>
-            {% endif %}         
+            {% endif %}
           </em>
 
-          {{ site.data.locales[lang].post.platform }}
           <em>
             {% if platform %}
-              <a href="{{ site.data.platforms.platforms[platform].url }}">{{ site.data.platforms.platforms[platform].name }}</a>
-            {% endif%}
+              {{ site.data.locales[lang].post.platform }}
+              <a href="{{ site.data.platforms.platforms[platform].url }}">
+                {{- site.data.platforms.platforms[platform].name -}}
+              </a>
+            {% endif %}
           </em>
 
-          {{ site.data.locales[lang].post.language }}
           <em>
             {% if language %}
-              <a href="{{ site.data.languages.languages[language].url }}">{{ site.data.languages.languages[language].name }}</a>
-            {% endif%}
+              {{ site.data.locales[lang].post.language }}
+              <a href="{{ site.data.languages.languages[language].url }}">
+                {{- site.data.languages.languages[language].name -}}
+              </a>
+            {% endif %}
           </em>
 
-
-          {{ site.data.locales[lang].post.level }}
           <em>
             {% if level %}
-              {{level}}
-            {% endif%}
+              {{ site.data.locales[lang].post.level }}
+              {{ level }}
+            {% endif %}
           </em>
-
         </span>
 
         <div>
@@ -126,8 +126,6 @@ tail_includes:
 
           <!-- read time -->
           {% include read-time.html content=content prompt=true lang=lang %}
-
-          
         </div>
       </div>
     </div>
